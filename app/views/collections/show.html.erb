@@ -15,7 +15,7 @@
     <%= paginate @items %>
 
 
-    <div class="items">
+    <div class="items" id="items-list">
         <% @items.each do |item| %>
             <%= render :partial => "items/item", :locals => {:item => item} %>
         <% end %>

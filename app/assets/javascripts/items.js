@@ -1,26 +1,36 @@
 // Place all the behaviors and hooks related to the matching controller here.
 // All this logic will automatically be available in application.js.
 
-function updateButtonState() {
-    let cnt = $('.inswap').length;
-    $('#exchange-btn').toggleClass('hidden-btn', !cnt).html('Request exchange (' + cnt + ')');
-}
 
-function initItems() {
-    $('.js-swap').on('ajax:complete', function(e) {
-        $('.inswap').removeClass('inswap');
+var ItemsPage = function() {
+    $(document).on('turbolinks:load', this.init.bind(this));
+};
+
+ItemsPage.prototype = {
+    init: function() {
+        if (!$('#items-list').length) {
+            return;
+        }
+
+        $('.js-swap').on('ajax:complete', function (e) {
+            $('.inswap').removeClass('inswap');
 
 
-        var result = JSON.parse(e.detail[0].responseText);
-        result.swap.forEach(function(v) {
-            $('#item' + v).addClass('inswap');
-        });
+            var result = JSON.parse(e.detail[0].responseText);
+            result.swap.forEach(function (v) {
+                $('#item' + v).addClass('inswap');
+            });
 
-        updateButtonState();
-    });
+            this.updateButtonState();
+        }.bind(this));
 
-    updateButtonState();
-}
+        this.updateButtonState();
+    },
 
-$(document).ready(initItems);
-$(document).on('turbolinks:load', initItems);
+    updateButtonState: function() {
+        let cnt = $('.inswap').length;
+        $('#exchange-btn').toggleClass('hidden-btn', !cnt).html('Request exchange (' + cnt + ')');
+    }
+};
+
+var itemPage = new ItemsPage();

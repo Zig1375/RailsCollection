@@ -8,7 +8,7 @@ Rails.application.routes.draw do
     end
 
     resources :collections do
-        get  :cart, to: 'cart#show'
+        get :cart, to: 'cart#show'
         post :cart, to: 'cart#create'
 
         resources :items do

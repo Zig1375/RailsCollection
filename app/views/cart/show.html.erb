@@ -10,13 +10,13 @@
     Here are the labels you've selected for exchange. If everything is correct fill in the form at the bottom to make an exchange request.
 </div>
 
-<%= form_with scope: :cart, url: collection_cart_path(@collection), local: true do |form| %>
-    <div class="items">
-        <% @items.each do |item| %>
-            <%= render :partial => "items/item", :locals => {:item => item, :form => form} %>
-        <% end %>
-    </div>
+<div class="items" id="cart-items-list">
+    <% @items.each do |item| %>
+        <%= render :partial => "items/item", :locals => {:item => item} %>
+    <% end %>
+</div>
 
+<%= form_with scope: :cart, url: collection_cart_path(@collection), local: true do |form| %>
     <div style="width: 600px; margin: 15px auto;">
         <div class="alert alert-warning">
             Labels for exchange: <b><%= @items.count %></b>
@@ -30,7 +30,7 @@
 
         <div class="form-group">
             <%= form.label :email, 'E-Mail' %><br>
-            <%= form.text_field :email, class: "form-control" %>
+            <%= form.text_field :email, value: current_user.nil? ? '' : current_user.email, class: "form-control" %>
         </div>
 
         <div class="form-group">
