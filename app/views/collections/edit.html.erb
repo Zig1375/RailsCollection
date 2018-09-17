@@ -1,0 +1,32 @@
+<div class="page-header">
+    <%= link_to 'Back', collection_path(@collection), class: "btn btn-default pull-right" %>
+    <h1>Edit collection</h1>
+</div>
+
+
+<%= form_with model: @collection, local: true do |form| %>
+
+    <% if @collection.errors.any? %>
+        <div id="error_explanation" class="alert alert-danger">
+            <h4>
+                <%= pluralize(@collection.errors.count, "error") %> prohibited
+                this collection from being saved:
+            </h4>
+            <ul>
+                <% @collection.errors.full_messages.each do |msg| %>
+                    <li><%= msg %></li>
+                <% end %>
+            </ul>
+        </div>
+    <% end %>
+
+    <div class="form-group">
+        <%= form.label :title %><br>
+        <%= form.text_field :title, class: "form-control" %>
+    </div>
+
+    <p>
+        <%= form.submit class: "btn btn-success" %>
+    </p>
+
+<% end %>

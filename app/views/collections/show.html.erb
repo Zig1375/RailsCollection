@@ -1,0 +1,27 @@
+<div class="page-header">
+    <%= link_to 'Back', collections_path, class: "btn btn-default pull-right" %>
+    <% if can? :manage, @collection %>
+        <%= link_to 'Add items', new_collection_item_path(@collection), class: "btn btn-default pull-right", style: "margin-right: 5px;" %>
+        <%= link_to 'Edit', edit_collection_path(@collection), class: "btn btn-default pull-right", style: "margin-right: 5px;" %>
+    <% end %>
+    <%= link_to 'Request exchange', collection_cart_path(@collection), class: "btn btn-primary pull-right hidden-btn", id: "exchange-btn" %>
+
+    <h1>
+        <%= @collection.title %>
+    </h1>
+</div>
+
+<% if @items.count > 0 %>
+    <%= paginate @items %>
+
+
+    <div class="items">
+        <% @items.each do |item| %>
+            <%= render :partial => "items/item", :locals => {:item => item} %>
+        <% end %>
+    </div>
+
+    <%= paginate @items %>
+<% else %>
+    No any items
+<% end %>

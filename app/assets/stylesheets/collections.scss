@@ -1,0 +1,14 @@
+// Place all the styles related to the collections controller here.
+// They will automatically be included in application.scss.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+#exchange-btn {
+    transition: 0.25s all linear;
+    margin-right: 5px;
+}
+
+#exchange-btn.hidden-btn {
+    visibility: hidden;
+    opacity: 0;
+    margin-right: 25px;
+}

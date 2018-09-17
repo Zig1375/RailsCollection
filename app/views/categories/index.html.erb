@@ -1,0 +1,36 @@
+<div class="page-header">
+    <%= link_to 'Back', collection_path(@collection), class: "btn btn-default pull-right" %>
+    <%= link_to 'New category', new_collection_category_path(@collection), class: "btn btn-success pull-right", style: "margin-right: 5px;" %>
+    <h1>Categories of collection</h1>
+</div>
+
+
+<% if @categories.count > 0 %>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Title</th>
+            <th>Count items</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <% @categories.each do |category| %>
+            <tr>
+                <td>
+                    <%= category.title  %>
+                </td>
+                <td>
+                    <%= category.items.length %>
+                </td>
+                <td style="width: 150px; text-align: right;">
+                    <%= link_to 'Edit', edit_collection_category_path(@collection, category) %> |
+                    <%= link_to 'Remove', [category.collection, category], method: :delete, data: {confirm: 'Are you sure?'} %>
+                </td>
+            </tr>
+        <% end %>
+        </tbody>
+    </table>
+<% else %>
+    No any category
+<% end %>

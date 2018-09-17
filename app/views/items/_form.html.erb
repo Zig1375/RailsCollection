@@ -1,0 +1,66 @@
+<%= form_with model: [ @collection, @item ], local: true do |form| %>
+
+    <% if @item.errors.any? %>
+        <div id="error_explanation" class="alert alert-danger">
+            <h4>
+                <%= pluralize(@item.errors.count, "error") %> prohibited
+                this collection from being saved:
+            </h4>
+            <ul>
+                <% @item.errors.full_messages.each do |msg| %>
+                    <li><%= msg %></li>
+                <% end %>
+            </ul>
+        </div>
+    <% end %>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <%= form.label :title %><br>
+                <%= form.text_field :title, class: "form-control" %>
+            </div>
+
+            <div class="form-group">
+                <%= form.label :note, 'Note (any visible text, f.g. your own number of item)' %><br>
+                <%= form.text_field :note, class: "form-control" %>
+            </div>
+
+            <div class="form-group">
+                <%= form.label :hiddenText, 'Hidden text (f.g. text on item)' %><br>
+                <%= form.text_area :hiddenText, class: "form-control" %>
+            </div>
+
+            <div class="checkbox">
+                <%= form.label :swappable do %>
+                    <%= form.check_box :swappable %>
+                    Available for swap
+                <% end %>
+            </div>
+
+            <% if !@item.id %>
+                <% (0..@collection.countImages).each do |i| %>
+                    <div class="form-group">
+                        <%= form.label :images, "Image #{i}" %><br>
+                        <%= form.file_field 'images', name: 'item[images][]',  accept: 'image/png,image/gif,image/jpeg' %>
+                    </div>
+                <% end %>
+            <% end %>
+
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group">
+                <%= form.label :category, "Categories" %>
+                <%= link_to 'Manage categories', collection_categories_path(@collection), class: "pull-right" %><br>
+                <%= select :categories, :category, options_for_select(@collection.categories.order(:title).map{ |c| [c.title, c.id] }), {}, {:class => 'form-control', :multiple => true, :style => 'height: 250px;' } %>
+            </div>
+        </div>
+    </div>
+
+
+    <p>
+        <%= form.submit class: "btn btn-success" %>
+    </p>
+
+<% end %>

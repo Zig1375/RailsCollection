@@ -1,0 +1,42 @@
+<div class="page-header">
+    <%= link_to 'Back', collections_path, class: "btn btn-default pull-right" %>
+    <h1>New collection</h1>
+</div>
+
+<%= form_with model: @collection, local: true do |form| %>
+
+    <% if @collection.errors.any? %>
+        <div id="error_explanation" class="alert alert-danger">
+            <h4>
+                <%= pluralize(@collection.errors.count, "error") %> prohibited
+                this collection from being saved:
+            </h4>
+            <ul>
+                <% @collection.errors.full_messages.each do |msg| %>
+                    <li><%= msg %></li>
+                <% end %>
+            </ul>
+        </div>
+    <% end %>
+
+    <div class="form-group">
+        <%= form.label :title %><br>
+        <%= form.text_field :title, class: "form-control" %>
+    </div>
+
+    <div class="form-group">
+        <%= form.label :countImages, "Images" %><br>
+        <%= form.select(:countImages, [['1', 1], ['2', 2]], {}, { :class => 'form-control' }) %>
+
+    </div>
+
+    <div class="form-group">
+        <%= form.label :product, "Type" %><br>
+        <%= form.select(:product, Collection.products.keys, {}, { :class => 'form-control' }) %>
+    </div>
+
+    <p>
+        <%= form.submit class: "btn btn-success" %>
+    </p>
+
+<% end %>

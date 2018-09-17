@@ -1,0 +1,16 @@
+<div class="page-header">
+    <%= link_to 'Back', collection_path(@collection), class: "btn btn-default pull-right" %>
+    <h1>Edit item</h1>
+</div>
+
+<%= render "form" %>
+
+<div class="alert alert-warning">
+    Images aren't allowed to modify. You can <%= link_to 'remove', [@item.collection, @item], method: :delete, data: {confirm: 'Are you sure?'} %> this item and create new one.
+</div>
+
+<div id="images-list">
+    <% @item.images.each do |image| %>
+        <img src="<%= image.url %>" alt="" />
+    <% end %>
+</div>

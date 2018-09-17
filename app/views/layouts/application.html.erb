@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Collections</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+</head>
+
+<body>
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div id="navbar">
+            <ul class="nav navbar-nav">
+                <li><%= link_to 'Collections', collections_path %></li>
+            </ul>
+            <ul class="nav navbar-nav pull-right">
+                <% if current_user %>
+                    <li class="user-email"><span><%= current_user.email %></span></li>
+                    <li><%= link_to 'Sign Out', users_sign_in_path, method: :delete %></li>
+                <% else %>
+                    <li><%= link_to 'Sign In', users_sign_in_path %></li>
+                <% end %>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container" style="padding-top: 70px;" id="container">
+    <div class="container">
+        <%= yield %>
+    </div>
+</div>
+</body>
+</html>

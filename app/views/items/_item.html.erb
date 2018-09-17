@@ -1,0 +1,33 @@
+<div class="item <%= (item.note == '') ? '' : 'item-footer' %> <%= 'item-swappable' if (item.swappable) %>  <%= 'inswap' if (itemInSwap? item) %>" id="item<%= item.id %>">
+    <div class="header">
+        <b>
+            <%= item.title %>&nbsp;
+        </b>
+
+        <div>
+            <% if item.swappable %>
+                <%= link_to '', collection_item_swap_path(item.collection, item), method: :post, remote: true, class: "js-swap glyphicon glyphicon-plus-sign" %>
+                <%= link_to '', collection_item_swap_path(item.collection, item), method: :post, remote: true, class: "js-swap glyphicon glyphicon-minus-sign" %>
+            <% end %>
+
+            <% if can? :manage, @collection %>
+                <%= link_to '', edit_collection_item_path(item.collection, item), class: "glyphicon glyphicon-pencil" %>
+                <%= link_to '', [item.collection, item], method: :delete, data: {confirm: 'Are you sure?'}, class: "glyphicon glyphicon-trash" %>
+            <% end %>
+        </div>
+    </div>
+
+    <div class="body">
+        <% item.images.each do |image| %>
+            <img src="<%= image.url %>" alt="" />
+        <% end %>
+    </div>
+
+    <div class="footer">
+        <div><%= item.note %></div>
+    </div>
+
+    <% if defined? form %>
+        <%= form.hidden_field :item, value: item.id %>
+    <% end %>
+</div>

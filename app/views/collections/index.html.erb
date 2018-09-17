@@ -1,0 +1,52 @@
+<div class="page-header">
+    <% if can? :new, Collection %>
+        <%= link_to 'New collection', new_collection_path, class: "btn btn-success pull-right" %>
+    <% end %>
+    <h1>Listing collections</h1>
+</div>
+
+
+
+<% if @collections.count > 0 %>
+    <%= paginate @collections %>
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Title</th>
+            <th>Type</th>
+            <th>Owner</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <% @collections.each do |collection| %>
+            <tr>
+                <td>
+                    <%= link_to collection.title, collection_path(collection) %>
+                </td>
+                <td>
+                    <%= collection.product %>
+                </td>
+                <td>
+                    <% if current_user && current_user.id == collection.user.id %>
+                        You
+                    <% else %>
+                        <%= collection.user.email.gsub(/(@.*)$/, '@...') %>
+                    <% end %>
+                </td>
+                <td style="width: 150px; text-align: right;">
+                    <% if can? :manage, collection %>
+                        <%= link_to 'Edit', edit_collection_path(collection) %> |
+                        <%= link_to 'Remove', collection_path(collection), method: :delete, data: {confirm: 'Are you sure?'} %>
+                    <% end %>
+                </td>
+            </tr>
+        <% end %>
+        </tbody>
+    </table>
+
+    <%= paginate @collections %>
+<% else %>
+    No any collections
+<% end %>
