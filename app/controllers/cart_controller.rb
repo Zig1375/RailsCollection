@@ -1,6 +1,7 @@
 class CartController < ApplicationController
 
     def show
+        @swap = Swap.new
         @collection = Collection.find(params[:collection_id])
 
         if ((!session[:swap]) || (!session[:swap][params[:collection_id]]) || (session[:swap][params[:collection_id]].count == 0))
@@ -27,9 +28,13 @@ class CartController < ApplicationController
 
         if @swap.save
             session[:swap][params[:collection_id]].each do |id|
-
+                item = @collection.items.find(id)
+                ItemsSwaps.create :item => item, :swap => @swap
             end
 
+            session[:swap][params[:collection_id]] = []
+
+            NewSwapMailer.sendmail(@collection.user.email).deliver
             redirect_to @collection
         else
             render 'show'

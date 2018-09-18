@@ -16,7 +16,21 @@
     <% end %>
 </div>
 
-<%= form_with scope: :cart, url: collection_cart_path(@collection), local: true do |form| %>
+<%= form_with scope: :swap, url: collection_cart_path(@collection), local: true do |form| %>
+    <% if @swap.errors.any? %>
+        <div id="error_explanation" class="alert alert-danger">
+            <h4>
+                <%= pluralize(@swap.errors.count, "error") %> prohibited
+                this collection from being saved:
+            </h4>
+            <ul>
+                <% @swap.errors.full_messages.each do |msg| %>
+                    <li><%= msg %></li>
+                <% end %>
+            </ul>
+        </div>
+    <% end %>
+
     <div style="width: 600px; margin: 15px auto;">
         <div class="alert alert-warning">
             Labels for exchange: <b><%= @items.count %></b>
