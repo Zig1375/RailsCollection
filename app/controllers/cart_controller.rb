@@ -32,9 +32,9 @@ class CartController < ApplicationController
                 ItemsSwaps.create :item => item, :swap => @swap
             end
 
+            NewSwapMailer.sendmail(session[:swap][params[:collection_id]].count).deliver
             session[:swap][params[:collection_id]] = []
 
-            NewSwapMailer.sendmail(@collection.user.email).deliver
             redirect_to @collection
         else
             render 'show'

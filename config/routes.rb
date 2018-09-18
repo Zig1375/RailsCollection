@@ -15,6 +15,7 @@ Rails.application.routes.draw do
             post :swap
         end
         resources :categories
+        resources :requests
     end
 
     root "collections#index"

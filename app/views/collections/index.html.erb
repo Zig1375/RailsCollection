@@ -35,8 +35,9 @@
                         <%= collection.user.email.gsub(/(@.*)$/, '@...') %>
                     <% end %>
                 </td>
-                <td style="width: 150px; text-align: right;">
+                <td style="width: 200px; text-align: right;">
                     <% if can? :manage, collection %>
+                        <%= link_to 'Requests', collection_requests_path(collection) %> |
                         <%= link_to 'Edit', edit_collection_path(collection) %> |
                         <%= link_to 'Remove', collection_path(collection), method: :delete, data: {confirm: 'Are you sure?'} %>
                     <% end %>
