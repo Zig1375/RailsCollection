@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_17_232606) do
+ActiveRecord::Schema.define(version: 2018_09_18_223224) do
 
   create_table "categories", force: :cascade do |t|
     t.string "title"
@@ -30,10 +30,10 @@ ActiveRecord::Schema.define(version: 2018_09_17_232606) do
   create_table "collections", force: :cascade do |t|
     t.string "title"
     t.integer "product", default: 0
+    t.integer "countImages", default: 1
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "countImages", default: 1
     t.index ["user_id"], name: "index_collections_on_user_id"
   end
 
@@ -41,25 +41,25 @@ ActiveRecord::Schema.define(version: 2018_09_17_232606) do
     t.string "title"
     t.string "note"
     t.text "hiddenText"
+    t.boolean "swappable", default: false
     t.string "images"
     t.integer "collection_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.boolean "swappable", default: false
     t.index ["collection_id"], name: "index_items_on_collection_id"
   end
 
-  create_table "items_swaps", force: :cascade do |t|
+  create_table "items_requests", force: :cascade do |t|
     t.integer "item_id"
-    t.integer "swap_id"
+    t.integer "request_id"
     t.integer "state", default: 1
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["item_id"], name: "index_items_swaps_on_item_id"
-    t.index ["swap_id"], name: "index_items_swaps_on_swap_id"
+    t.index ["item_id"], name: "index_items_requests_on_item_id"
+    t.index ["request_id"], name: "index_items_requests_on_request_id"
   end
 
-  create_table "swaps", force: :cascade do |t|
+  create_table "requests", force: :cascade do |t|
     t.string "name"
     t.string "email"
     t.text "message"
@@ -67,7 +67,7 @@ ActiveRecord::Schema.define(version: 2018_09_17_232606) do
     t.integer "collection_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["collection_id"], name: "index_swaps_on_collection_id"
+    t.index ["collection_id"], name: "index_requests_on_collection_id"
   end
 
   create_table "users", force: :cascade do |t|

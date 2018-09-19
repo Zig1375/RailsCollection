@@ -1,19 +1,19 @@
 class CartController < ApplicationController
 
     def show
-        @swap = Swap.new
+        @request = Request.new
         @collection = Collection.find(params[:collection_id])
 
-        if ((!session[:swap]) || (!session[:swap][params[:collection_id]]) || (session[:swap][params[:collection_id]].count == 0))
+        if ((!session[:request]) || (!session[:request][params[:collection_id]]) || (session[:request][params[:collection_id]].count == 0))
             redirect_to @collection
             return
         end
 
-        @items = @collection.items.where(id: session[:swap][params[:collection_id]])
+        @items = @collection.items.where(id: session[:request][params[:collection_id]])
     end
 
     def create
-        if ((!session[:swap]) || (!session[:swap][params[:collection_id]]) || (session[:swap][params[:collection_id]].count == 0))
+        if ((!session[:request]) || (!session[:request][params[:collection_id]]) || (session[:request][params[:collection_id]].count == 0))
             redirect_to @collection
             return
         end
@@ -24,16 +24,16 @@ class CartController < ApplicationController
             return
         end
 
-        @swap = Swap.new(swap_params.merge(collection_id: @collection.id))
+        @request = Request.new(swap_params.merge(collection_id: @collection.id))
 
-        if @swap.save
-            session[:swap][params[:collection_id]].each do |id|
+        if @request.save
+            session[:request][params[:collection_id]].each do |id|
                 item = @collection.items.find(id)
-                ItemsSwaps.create :item => item, :swap => @swap
+                ItemsRequests.create :item => item, :request => @request
             end
 
-            NewSwapMailer.sendmail(session[:swap][params[:collection_id]].count).deliver
-            session[:swap][params[:collection_id]] = []
+            NewSwapMailer.sendmail(@collection, session[:request][params[:collection_id]].count).deliver
+            session[:request][params[:collection_id]] = []
 
             redirect_to @collection
         else
@@ -43,6 +43,6 @@ class CartController < ApplicationController
 
 private
     def swap_params
-        params.require(:swap).permit(:name, :email, :message)
+        params.require(:request).permit(:name, :email, :message)
     end
 end

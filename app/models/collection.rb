@@ -4,9 +4,9 @@ class Collection < ApplicationRecord
     belongs_to :user
     has_many :categories
     has_many :items
-    has_many :swaps
+    has_many :requests
 
     attr_readonly :product, :countImages
-    validates :title, presence: true, length: { minimum: 5, maximum: 32 }
+    validates :title, presence: true, length: { minimum: 4, maximum: 32 }
     validates :countImages, inclusion: { in: 1..3 }
 end

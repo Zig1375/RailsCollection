@@ -16,15 +16,15 @@
     <% end %>
 </div>
 
-<%= form_with scope: :swap, url: collection_cart_path(@collection), local: true do |form| %>
-    <% if @swap.errors.any? %>
+<%= form_with scope: :request, url: collection_cart_path(@collection), local: true do |form| %>
+    <% if @request.errors.any? %>
         <div id="error_explanation" class="alert alert-danger">
             <h4>
-                <%= pluralize(@swap.errors.count, "error") %> prohibited
+                <%= pluralize(@request.errors.count, "error") %> prohibited
                 this collection from being saved:
             </h4>
             <ul>
-                <% @swap.errors.full_messages.each do |msg| %>
+                <% @request.errors.full_messages.each do |msg| %>
                     <li><%= msg %></li>
                 <% end %>
             </ul>

@@ -17,7 +17,7 @@ ItemsPage.prototype = {
 
 
             var result = JSON.parse(e.detail[0].responseText);
-            result.swap.forEach(function (v) {
+            result.request.forEach(function (v) {
                 $('#item' + v).addClass('inswap');
             });
 

@@ -55,22 +55,22 @@ class ItemsController < ApplicationController
         @item = @collection.items.find(params[:item_id])
 
         if @item.swappable
-            if !session[:swap]
-                session[:swap] = {}
+            if !session[:request]
+                session[:request] = {}
             end
 
-            if !session[:swap][params[:collection_id]]
-                session[:swap][params[:collection_id]] = []
+            if !session[:request][params[:collection_id]]
+                session[:request][params[:collection_id]] = []
             end
 
-            if session[:swap][params[:collection_id]].include? params[:item_id]
-                session[:swap][params[:collection_id]].delete(params[:item_id])
+            if session[:request][params[:collection_id]].include? params[:item_id]
+                session[:request][params[:collection_id]].delete(params[:item_id])
             else
-                session[:swap][params[:collection_id]].push(params[:item_id])
+                session[:request][params[:collection_id]].push(params[:item_id])
             end
         end
 
-        result = {status: "ok", swap: session[:swap][params[:collection_id]]}
+        result = {status: "ok", request: session[:request][params[:collection_id]]}
         render json: result
     end
 

@@ -1,6 +1,6 @@
-class CreateSwaps < ActiveRecord::Migration[5.2]
+class CreateRequests < ActiveRecord::Migration[5.2]
   def change
-    create_table :swaps do |t|
+    create_table :requests do |t|
       t.column :name, :string
       t.column :email, :string
       t.column :message, :text

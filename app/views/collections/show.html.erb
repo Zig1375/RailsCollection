@@ -3,6 +3,7 @@
     <% if can? :manage, @collection %>
         <%= link_to 'Add items', new_collection_item_path(@collection), class: "btn btn-default pull-right", style: "margin-right: 5px;" %>
         <%= link_to 'Edit', edit_collection_path(@collection), class: "btn btn-default pull-right", style: "margin-right: 5px;" %>
+        <%= link_to 'Requests', collection_requests_path(@collection), class: "btn btn-default pull-right", style: "margin-right: 5px;" %>
     <% end %>
     <%= link_to 'Request exchange', collection_cart_path(@collection), class: "btn btn-primary pull-right hidden-btn", id: "exchange-btn" %>
 

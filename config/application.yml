@@ -2,6 +2,7 @@ defaults: &defaults
   gmail_username: 'noreply@ikalogs.ru'
   gmail_password: 'q=p+dqKWiy6Z'
 
+
 development:
   <<: *defaults
 

@@ -5,8 +5,8 @@ class EmailValidator < ActiveModel::EachValidator
     end
 end
 
-class Swap < ApplicationRecord
-    enum state: { new_swap: 1, in_work: 2, ready: 3, sent: 4, declined: 5}
+class Request < ApplicationRecord
+    enum state: { 'New request': 1, 'In process': 2, Ready: 3, Sent: 4, Declined: 5}
     belongs_to :collection
     has_and_belongs_to_many :items
 
