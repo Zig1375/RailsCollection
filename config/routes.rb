@@ -14,8 +14,13 @@ Rails.application.routes.draw do
         resources :items do
             post :swap
         end
+        resources :requests do
+            post :item, path: "item/:item_id", to: 'requests#item'
+            post :state, path: "state/:state", to: 'requests#state'
+        end
+
         resources :categories
-        resources :requests
+
     end
 
     root "collections#index"

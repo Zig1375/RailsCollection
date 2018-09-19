@@ -29,7 +29,7 @@ class CartController < ApplicationController
         if @request.save
             session[:request][params[:collection_id]].each do |id|
                 item = @collection.items.find(id)
-                ItemsRequests.create :item => item, :request => @request
+                ItemsRequest.create :item => item, :request => @request
             end
 
             NewSwapMailer.sendmail(@collection, session[:request][params[:collection_id]].count).deliver

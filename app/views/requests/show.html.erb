@@ -6,7 +6,7 @@
     </h1>
 </div>
 
-<%= form_with scope: :request, url: collection_request_path(@collection, @request), local: true do |form| %>
+<%= form_with model: [ @collection, @request ], local: true do |form| %>
     <% if @request.errors.any? %>
         <div id="error_explanation" class="alert alert-danger">
             <h4>
@@ -37,9 +37,16 @@
             <%= form.text_area :message, readonly: true, class: "form-control" %>
         </div>
 
-        <div class="form-group">
+        <div class="form-group request-state" data-state="<%= @request.state %>">
             <%= form.label :state, "Status" %><br>
-            <%= form.select(:state, Request.states.keys, {}, { :class => 'form-control' }) %>
+            <span id="request_state"><%= @request.state %></span>
+
+            <span class="req-state-ready">
+                <%= link_to 'Sent', collection_request_state_path(@collection, @request, Request.states['Sent']), method: :post, remote: true %>
+            </span>
+            <span class="req-state-finished">
+                <%= link_to 'Finished', collection_request_state_path(@collection, @request, Request.states['Finished']), method: :post, remote: true %>
+            </span>
         </div>
 
         <p>
@@ -49,15 +56,15 @@
 <% end %>
 
 <div class="alert alert-warning">
-    Labels for exchange: <b><%= @request.items.count %></b>
+    Labels for exchange: <b id="cnt_items"><%= @notDeclinedCntItems %></b>
 </div>
 
-<div class="items" id="cart-items-list">
-    <% @request.items.each do |item| %>
+<div class="items" data-state="<%= @request.state %>" id="request-items-list">
+    <% @request.items_requests.each do |req| %>
         <%= render :partial => "items/item", :locals => {
-            :item => item,
+            :item => req.item,
             :swap => @request,
-            :state => 'new'
+            :state => req.state
         } %>
     <% end %>
 </div>

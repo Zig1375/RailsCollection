@@ -1,4 +1,4 @@
-<div class="item <%= (item.note == '') ? '' : 'item-footer' %> <%= 'item-swappable' if (item.swappable) %>  <%= 'inswap' if (itemInSwap? item) %> <%= 'item-swap-status-' if defined? swap %>" id="item<%= item.id %>">
+<div class="item <%= (item.note == '') ? '' : 'item-footer' %> <%= 'item-swappable' if (item.swappable) %>  <%= 'inswap' if (itemInSwap? item) %> <%= 'item-swap-status-' + state if defined? swap %>" id="item<%= item.id %>">
     <div class="header">
         <b>
             <%= item.title %>&nbsp;
@@ -6,9 +6,9 @@
 
         <div>
             <% if defined? swap %>
-                <%= link_to '', collection_item_swap_path(item.collection, item), method: :post, remote: true, class: "js-item-status glyphicon glyphicon-time" %>
-                <%= link_to '', collection_item_swap_path(item.collection, item), method: :post, remote: true, class: "js-item-status glyphicon glyphicon-ok" %>
-                <%= link_to '', collection_item_swap_path(item.collection, item), method: :post, remote: true, class: "js-item-status glyphicon glyphicon-remove" %>
+                <%= link_to '', collection_request_item_path(item.collection, swap, item), method: :post, remote: true, class: "js-item-status glyphicon glyphicon-time" %>
+                <%= link_to '', collection_request_item_path(item.collection, swap, item), method: :post, remote: true, class: "js-item-status glyphicon glyphicon-ok" %>
+                <%= link_to '', collection_request_item_path(item.collection, swap, item), method: :post, remote: true, class: "js-item-status glyphicon glyphicon-remove" %>
             <% else %>
                 <% if item.swappable %>
                     <%= link_to '', collection_item_swap_path(item.collection, item), method: :post, remote: true, class: "js-swap glyphicon glyphicon-plus-sign" %>
