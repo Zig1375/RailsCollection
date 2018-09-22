@@ -21,7 +21,7 @@
 
     .item.item-swap-status-new_item .glyphicon.glyphicon-time,
     .item.item-swap-status-approved .glyphicon.glyphicon-ok,
-    .item.item-swap-status-declined .glyphicon.glyphicon-remove {
+    .item.item-swap-status-rejected .glyphicon.glyphicon-remove {
         display: inline-block;
     }
 
@@ -33,7 +33,7 @@
         }
     }
 
-    .item.item-swap-status-declined {
+    .item.item-swap-status-rejected {
         .header {
             color: #990000 !important;
             background-color: #f9baba !important;;
@@ -48,13 +48,25 @@
 }
 
 .req-state-ready,
+.req-state-revert,
 .req-state-finished {
     display: none;
 }
 
+.request-state[data-state="Sent"] .req-state-rejected,
+.request-state[data-state="Rejected"] .req-state-rejected,
+.request-state[data-state="Finished"] .req-state-rejected {
+    display: none;
+}
+
 .request-state[data-state="Ready"] .req-state-ready,
+.request-state[data-state="Rejected"] .req-state-revert,
 .request-state[data-state="Sent"]  .req-state-finished {
     display: inline;
+}
+
+#form-wrap[data-items="0"] .req-state-revert {
+    display: none !important;
 }
 
 .items[data-state="Sent"],

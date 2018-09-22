@@ -6,7 +6,7 @@ class EmailValidator < ActiveModel::EachValidator
 end
 
 class Request < ApplicationRecord
-    enum state: { 'New request': 1, 'In process': 2, Ready: 3, Sent: 4, Finished: 5, Declined: 6}
+    enum state: { 'New request': 1, 'In process': 2, Ready: 3, Sent: 4, Finished: 5, Rejected: 6}
     belongs_to :collection
     has_many :items_requests
     has_many :items, :through => :items_requests

@@ -21,7 +21,7 @@
         </div>
     <% end %>
 
-    <div style="width: 600px; margin: 15px auto;">
+    <div style="width: 600px; margin: 15px auto;" id="form-wrap" data-items="<%= @notRejectedCntItems %>">
         <div class="form-group">
             <%= form.label :name, 'Name' %><br>
             <%= form.text_field :name, class: "form-control" %>
@@ -47,6 +47,12 @@
             <span class="req-state-finished">
                 <%= link_to 'Finished', collection_request_state_path(@collection, @request, Request.states['Finished']), method: :post, remote: true %>
             </span>
+            <span class="req-state-rejected">
+                <%= link_to 'Reject', collection_request_state_path(@collection, @request, Request.states['Rejected']), method: :post, remote: true %>
+            </span>
+            <span class="req-state-revert">
+                <%= link_to 'Revert', collection_request_state_path(@collection, @request, "Revert"), method: :post, remote: true %>
+            </span>
         </div>
 
         <p>
@@ -56,7 +62,7 @@
 <% end %>
 
 <div class="alert alert-warning">
-    Labels for exchange: <b id="cnt_items"><%= @notDeclinedCntItems %></b>
+    Labels for exchange: <b id="cnt_items"><%= @notRejectedCntItems %></b>
 </div>
 
 <div class="items" data-state="<%= @request.state %>" id="request-items-list">
