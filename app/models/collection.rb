@@ -1,5 +1,7 @@
 class Collection < ApplicationRecord
     enum product: { labels: 1, stamps: 2, coins: 3 }
+    scope :product, -> (product) { where product: product }
+
 
     belongs_to :user
     has_many :categories

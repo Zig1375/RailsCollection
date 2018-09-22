@@ -5,6 +5,7 @@ class CollectionsController < ApplicationController
         authorize! :index, Collection
 
         @collections = Collection.all.page params[:page]
+        @collections = @collections.product(params[:product]) if params[:product].present?
     end
 
     def show
