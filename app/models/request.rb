@@ -6,6 +6,9 @@ class EmailValidator < ActiveModel::EachValidator
 end
 
 class Request < ApplicationRecord
+    scope :status, -> (status) { where state: status }
+    scope :email, -> (email) { where("email like ?", "%#{email}%")}
+
     enum state: { 'New request': 1, 'In process': 2, Ready: 3, Sent: 4, Finished: 5, Rejected: 6}
     belongs_to :collection
     has_many :items_requests

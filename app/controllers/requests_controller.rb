@@ -3,7 +3,9 @@ class RequestsController < ApplicationController
         @collection = Collection.find(params[:collection_id])
         authorize! :manage, @collection, user_id: current_user.id
 
-        @requests = @collection.requests.all.page params[:page]
+        @requests = @collection.requests.all.page(params[:page])
+        @requests = @requests.status(params[:status]) if params[:status].present?
+        @requests = @requests.email(params[:email]) if params[:email].present?
     end
 
     def show
